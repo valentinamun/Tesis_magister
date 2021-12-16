@@ -306,16 +306,17 @@ xx=linspace(lon(1),lon(end),321)';
 yy=linspace(lat(1),lat(end),620)';
 levels=[min(min(prom_esta_v(:,:,3))):0.1:max(max(prom_esta_v(:,:,3)))];
 
+
 figure()
 subplot(141)
-set(gcf,'position',[10,10,700,800]) %establece el marco del grafico
+set(gcf,'position',[10,10,700,800]) 
 m_proj('robinson','lon',[lon(1,1) lon(end,1)],'lat',[lat(1,1) lat(1,end)]);
-m_gshhs_f('patch',[0.9 0.9 0.9]);    % Coastline...
-m_gshhs_f('speckle','color','k');    % with speckle added
+m_gshhs_f('patch',[0.9 0.9 0.9]);    
+m_gshhs_f('speckle','color','k');   
 hold on;
 m_contourf(xx,yy,prom_esta_v(:,:,1),levels,'linecolor','none');
 m_grid('linewi',2,'linest','none','tickdir','out','fontsize',12);
-m_quiver(lon',lat',u_ver,v_ver);
+m_quiver(lon(1:20:end,1:20:end)',lat(1:20:end,1:20:end)',u_ver(1:20:end,1:20:end),v_ver(1:20:end,1:20:end));
 caxis([-0.7202 0.5646])
 title('Verano 100-300m')
 set(gca,'Fontsize',18)
@@ -329,6 +330,7 @@ m_gshhs_f('speckle','color','k');    % with speckle added
 hold on;
 m_contourf(xx,yy,prom_esta_v(:,:,2),levels,'linecolor','none');
 m_grid('linewi',2,'linest','none','tickdir','out','fontsize',12);
+m_quiver(lon(1:20:end,1:20:end)',lat(1:20:end,1:20:end)',u_oto(1:20:end,1:20:end),v_oto(1:20:end,1:20:end));
 caxis([-0.6792 0.5646])
 title('Otoño 100-300m')
 set(gca,'Fontsize',18)
@@ -340,8 +342,9 @@ m_proj('robinson','lon',[lon(1,1) lon(end,1)],'lat',[lat(1,1) lat(1,end)]);
 m_gshhs_f('patch',[0.9 0.9 0.9]);    % Coastline...
 m_gshhs_f('speckle','color','k');    % with speckle added
 hold on;
-m_contourf(xx,yy,prom_esta_v(:,:,4),levels,'linecolor','none');
+m_contourf(xx,yy,prom_esta_v(:,:,3),levels,'linecolor','none');
 m_grid('linewi',2,'linest','none','tickdir','out','fontsize',12);
+m_quiver(lon(1:20:end,1:20:end)',lat(1:20:end,1:20:end)',u_inv(1:20:end,1:20:end),v_inv(1:20:end,1:20:end));
 caxis([-0.6793 0.5646])
 title('Invierno 100-300m')
 set(gca,'Fontsize',18)
@@ -352,14 +355,14 @@ m_proj('robinson','lon',[lon(1,1) lon(end,1)],'lat',[lat(1,1) lat(1,end)]);
 m_gshhs_f('patch',[0.9 0.9 0.9]);    % Coastline...
 m_gshhs_f('speckle','color','k');    % with speckle added
 hold on;
-m_contourf(xx,yy,prom_esta_v(:,:,5),levels,'linecolor','none');
+m_contourf(xx,yy,prom_esta_v(:,:,4),levels,'linecolor','none');
 m_grid('linewi',2,'linest','none','tickdir','out','fontsize',12);
+m_quiver(lon(1:20:end,1:20:end)',lat(1:20:end,1:20:end)',u_pri(1:20:end,1:20:end),v_pri(1:20:end,1:20:end));
 h=colorbar
 h.Title.String = "[m/s]";
 caxis([-0.6793 0.5646])
 title('Primavera 100-300m')
 set(gca,'Fontsize',18)
-
 
 
 
