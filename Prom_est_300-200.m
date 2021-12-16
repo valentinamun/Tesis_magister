@@ -363,6 +363,6 @@ h.Title.String = "[m/s]";
 caxis([-0.6793 0.5646])
 title('Primavera 100-300m')
 set(gca,'Fontsize',18)
-
+set(h,'Position', [0.922  0.294  0.0132  0.448]);
 
 
