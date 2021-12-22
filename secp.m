@@ -80,5 +80,22 @@ prom_est_sec_hor=prom_ver;
 prom_est_sec_hor(:,:,2)=prom_oto;
 prom_est_sec_hor(:,:,3)=prom_inv;
 prom_est_sec_hor(:,:,4)=prom_pri;
+
+%Graficos
+y1=-1*y1;
+
+for k=1:4
+figure(k)
+hold on
+pcolor(x1,y1,prom_est_sec_hor(:,:,k))
+colormap(jet)
+shading interp
+set(gca,'ydir','reverse')
+xlabel('Distancia [km]')
+ylabel('Profundidad [m]')     
+axis tight
+set(gca,'Fontsize',13)
+colorbar
+end 
   
 end
