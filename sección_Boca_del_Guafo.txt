@@ -1,0 +1,10 @@
+%Extraer una variable 
+ncks -v u mosa_BGQ_his_M1_1h_Z0_E02.nc mosa_BGQ_u.nc para extraer sólo la variable u
+ncks -d eta_rho,357,389 -d xi_u,246,246 mosa_BGQ_u.nc mosa_BGQ_BGuafo.nc
+
+%Realizar seccion Boca del Guafo de la componenete de la velocidad U
+i=246,j=357 a i=246, j=389
+ncks -d eta_rho,357,389 -d xi_u,246,246 mosa_BGQ_u.nc mosa_BGQ_BGuafo.nc
+
+%Obtener variable h del archivo de grilla
+ncks -d eta_rho,357,389 -d xi_rho,246,246 mosa_BGQ_grd.nc mosa_BGQ_grd_BGuafo.nc
