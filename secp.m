@@ -13,8 +13,6 @@ function [x1,y1,prom_est_sec_hor,lon_cercana1,lon_cercana2,lat_cercana] =secp(lo
 %OUTPUT
 %Distancia en kilometros 
 %Profundidad
-%Variable de los primeros 6 meses.
-
 
   mosa1=filename1;
   mosa2=filename2;
@@ -33,6 +31,8 @@ function [x1,y1,prom_est_sec_hor,lon_cercana1,lon_cercana2,lat_cercana] =secp(lo
  C= repmat(lon,[1 length(lon2)]);
  [valor_min,idx_cercano2] =min(abs(C-(lon2)'));
  lon_cercana2 = lon(idx_cercano2);
+% 
+%    lon_cercana2=-76.5000; %valor fijo para todas las secciones
 
  C= repmat(lat,[1 length(lat1)]);
  [valor_min,idx_cercano3] = min(abs(C-(lat1)'));
@@ -40,8 +40,8 @@ function [x1,y1,prom_est_sec_hor,lon_cercana1,lon_cercana2,lat_cercana] =secp(lo
  
  %Secciones Horizontales
  for i=1:6
- [x1,y1,sech1(:,:,i)]=get_section(mosa1,grd,[lon_cercana1 lon_cercana2],[lat_cercana lat_cercana],var,i);
- [x1,y1,sech2(:,:,i)]=get_section(mosa2,grd,[lon_cercana1 lon_cercana2],[lat_cercana lat_cercana],var,i);
+ [x1,y1,sech1(:,:,i)]=get_section(mosa1,grd,[lon_cercana1 -76.700],[lat_cercana lat_cercana],var,i);
+ [x1,y1,sech2(:,:,i)]=get_section(mosa2,grd,[lon_cercana1 -76.700],[lat_cercana lat_cercana],var,i);
  end 
  
  %Promedios Estacionales
@@ -82,20 +82,19 @@ prom_est_sec_hor(:,:,3)=prom_inv;
 prom_est_sec_hor(:,:,4)=prom_pri;
 
 %Graficos
-y1=-1*y1;
-
-for k=1:4
-figure(k)
-hold on
-pcolor(x1,y1,prom_est_sec_hor(:,:,k))
-colormap(jet)
-shading interp
-set(gca,'ydir','reverse')
-xlabel('Distancia [km]')
-ylabel('Profundidad [m]')     
-axis tight
-set(gca,'Fontsize',13)
-colorbar
-end 
-  
+% y1=-1*y1;
+% 
+% for k=1:4
+% figure(k)
+% hold on
+% pcolor(x1,y1,prom_est_sec_hor(:,:,k))
+% colormap(jet)
+% shading interp
+% set(gca,'ydir','reverse')
+% xlabel('Distancia [km]')
+% ylabel('Profundidad [m]')     
+% axis tight
+% set(gca,'Fontsize',13)
+% colorbar
+% end 
 end
