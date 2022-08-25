@@ -36,6 +36,7 @@ for i=1:6;
 [x1,y1,oxy2(:,:,i)]=get_section('mosa_RIO_avg_Y8S2.nc','mosa_BGQ_grd.nc',[lon(pos_lonE1) lon(pos_lonE1)],[-43.3763 -43.8108],'O2',i);   
 end
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Promedios Estacionales Oxy
@@ -81,94 +82,84 @@ prom_oxy_oto=prom_oxy_oto/44.661;
 prom_oxy_pri=prom_oxy_pri/44.661;
 prom_oxy_inv=prom_oxy_inv/44.661;
 
+cmap = colormap_cpt('OXY.cpt');
+
 figure()
 subplot(141)
 hold on
 pcolor(x1,y1,prom_oxy_ver)
-colormap(jet)
+colormap(cmap)
 shading interp
-C = contour(x1,y1,prom_oxy_ver,[5.0 5.3 5.8 6 6.3],...
+C = contour(x1,y1,prom_oxy_ver,[2:0.5:6],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-% h = colorbar;
-set(gca,'ydir','reverse')
-% set(get(h,'title'),'string',{'[oxy]'},'FontName','Helvetica',...
-%        'FontSize',14,'FontWeight','bold'); 
+text(-11.92,198.017,'N','Fontsize',16,...
+        'FontName','Courier','Color','k')  
+text(-11.92,198.017,'S','Fontsize',16,...
+        'FontName','Courier','Color','k')      
+set(gca,'ydir','reverse') 
 xlabel('Distancia [km]')
 ylabel('Profundidad [m]')
 title('Verano')
-text(1,220,'Lat= [-43.3763 -43.8108] ','Fontsize',13,...
-        'FontName','Arial','Color','k')
-text(1,215,'Lon=  -74.1000 ','Fontsize',13,...
-        'FontName','Arial','Color','k')    
-% ylabel(h, 'ml/L','fontsize',16)    
+caxis([2 6])      
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_oxy_oto)) max(max(prom_oxy_ver))])
-%set(h, 'YTick',5:0.2:6.5);
+set(gca,'Fontsize',14)
+box on
+
 
 subplot(142)
 hold on
 pcolor(x1,y1,prom_oxy_oto)
-colormap(jet)
+colormap(cmap)
 shading interp
-C = contour(x1,y1,prom_oxy_oto,[4.5 5.0 5.4 5.8 6 ],...
+C = contour(x1,y1,prom_oxy_oto,[2:0.5:6],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-% h = colorbar;
-set(gca,'ydir','reverse')
-% set(get(h,'title'),'string',{'[oxy]'},'FontName','Helvetica',...
-%        'FontSize',14,'FontWeight','bold');   
+set(gca,'ydir','reverse')  
 title('Otoño')
-%text(3,180,'Lon= -73.9250 ','Fontsize',13,...
-        %'FontName','Arial','Color','k')
-% ylabel(h, 'ml/L','fontsize',16)    
+xlabel('Distancia [km]')  
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_oxy_oto)) max(max(prom_oxy_ver))])
-%set(h, 'YTick',5:0.2:6.5);
+set(gca,'Fontsize',14)
+caxis([2 6])
+box on
 
 subplot(143)
 hold on
 pcolor(x1,y1,prom_oxy_inv)
-colormap(jet)
+colormap(cmap)
 shading interp
-C = contour(x1,y1,prom_oxy_inv,[5.3 5.5 5.8 5.9 6 ],...
+C = contour(x1,y1,prom_oxy_inv,[2:0.5:6],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-% h = colorbar;
-set(gca,'ydir','reverse')
-% set(get(h,'title'),'string',{'[oxy]'},'FontName','Helvetica',...
-%        'FontSize',14,'FontWeight','bold');   
+set(gca,'ydir','reverse')  
 title('Invierno')
-%text(3,180,'Lon= -73.9250 ','Fontsize',13,...
-        %'FontName','Arial','Color','k')
-% ylabel(h, 'ml/L','fontsize',16)    
+xlabel('Distancia [km]')    
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_oxy_oto)) max(max(prom_oxy_ver))])
-%set(h, 'YTick',5:0.2:6.5);
+set(gca,'Fontsize',14)
+caxis([2 6])
+box on
 
 subplot(144)
 hold on
 pcolor(x1,y1,prom_oxy_pri)
-colormap(jet)
+colormap(cmap)
 shading interp
-C = contour(x1,y1,prom_oxy_pri,[5.5  5.8 6 6.2 6.4],...
+C = contour(x1,y1,prom_oxy_pri,[2:0.5:6],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
 h = colorbar;
 set(gca,'ydir','reverse')
-set(get(h,'title'),'string',{'[oxy]'},'FontName','Helvetica',...
-       'FontSize',14,'FontWeight','bold');   
+set(get(h,'title'),'string',{'[ml/L]'},'FontName','Helvetica',...
+       'FontSize',14,'FontWeight','bold','Position',[10.368 600.914 0]);   
 title('Primavera')
-%text(3,180,'Lon= -73.9250 ','Fontsize',13,...
-        %'FontName','Arial','Color','k')
-ylabel(h, '[ml/L]','fontsize',16)    
+ylabel(h, 'Oxígeno','fontsize',16) 
+xlabel('Distancia [km]')
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_oxy_oto)) max(max(prom_oxy_ver))])
+set(gca,'Fontsize',14)
+caxis([2 6])
 set(h,'Position', [0.920  0.104  0.016  0.812]);
+box on
+
 
 %% Secciones verticales de Velocidad U
 
@@ -177,6 +168,11 @@ for i=1:6;
 [x2,y2,u2(:,:,i)]=get_section('mosa_RIO_avg_Y8S2.nc','mosa_BGQ_grd.nc',[lon(pos_lonE1) lon(pos_lonE1)],[-43.3763 -43.8108],'u',i);   
 end
 
+figure()
+pcolor(x2,y2,u1(:,:,))
+shading interp
+set(gca,'Ydir','reverse')
+set(gca,'Xdir','reverse')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Promedio Verano
@@ -212,82 +208,84 @@ prom_u_pri=nanmean(u_pri,3);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 y2=-1*y2;
 
+vel = colormap_cpt('Velocidad.cpt');
+
 figure()
 subplot(141)
 hold on
 pcolor(x2,y2,prom_u_ver)
-colormap(jet)
+colormap(vel)
 shading interp
-C = contour(x2,y2,prom_u_ver,[-1 0.0 1],...
+C = contour(x2,y2,prom_u_ver,[-0.4,0,0.4],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-% h = colorbar;
-set(gca,'ydir','reverse')
-% set(get(h,'title'),'string',{'[oxy]'},'FontName','Helvetica',...
-%        'FontSize',14,'FontWeight','bold');    
+set(gca,'ydir','reverse')    
+text(-11.92,198.017,'N','Fontsize',16,...
+        'FontName','Courier','Color','k')  
+text(-11.92,198.017,'S','Fontsize',16,...
+        'FontName','Courier','Color','k') 
 xlabel('Distancia [km]')
 ylabel('Profundidad [m]')
-title('Verano')
-text(1,220,'Lat= [-43.4490 -43.6844] ','Fontsize',13,...
-        'FontName','Arial','Color','k')
-text(1,215,'Lon=  -73.9250 ','Fontsize',13,...
-        'FontName','Arial','Color','k')    
-% ylabel(h, 'ml/L','fontsize',16)    
+title('Verano')       
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_u_ver)) max(max(prom_u_inv))])
+set(gca,'Fontsize',14)
+caxis([-0.2 0.2])
+box on
+
 
 subplot(142)
 hold on
 pcolor(x2,y2,prom_u_oto)
-colormap(jet)
+colormap(vel)
 shading interp
-C = contour(x2,y2,prom_u_oto,[-1 0.0 1],...
+C = contour(x2,y2,prom_u_oto,[-0.4,0,0.4],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-% h = colorbar;
-set(gca,'ydir','reverse')
-% set(get(h,'title'),'string',{'[oxy]'},'FontName','Helvetica',...
-%        'FontSize',14,'FontWeight','bold');    
-title('Otoño')    
-% ylabel(h, 'ml/L','fontsize',16)    
+xlabel('Distancia [km]')
+set(gca,'ydir','reverse')    
+title('Otoño')      
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_u_ver)) max(max(prom_u_inv))])
+set(gca,'Fontsize',14)
+caxis([-0.2 0.2])
+box on
 
 subplot(143)
 hold on
 pcolor(x2,y2,prom_u_inv)
-colormap(jet)
+colormap(vel)
 shading interp
-C = contour(x2,y2,prom_u_inv,[-1 0.0 1],...
+C = contour(x2,y2,prom_u_inv,[-0.4,0,0.4],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
 set(gca,'ydir','reverse')   
-title('Invierno')        
+title('Invierno')  
+xlabel('Distancia [km]')
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_u_ver)) max(max(prom_u_inv))])
-
+set(gca,'Fontsize',14)
+caxis([-0.2 0.2])
+box on
 
 subplot(144)
 hold on
 pcolor(x2,y2,prom_u_pri)
-colormap(jet)
+colormap(vel)
 shading interp
-C = contour(x2,y2,prom_u_pri,[-1 0.0 1],...
+C = contour(x2,y2,prom_u_pri,[-0.4,0,0.4],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
 h = colorbar;
 set(gca,'ydir','reverse')
-set(get(h,'title'),'string',{'[u]'},'FontName','Helvetica',...
+set(get(h,'title'),'string',{'[m/s]'},'FontName','Helvetica',...
        'FontSize',14,'FontWeight','bold');   
 title('Primavera')
-ylabel(h, '[m/s]','fontsize',16)    
+xlabel('Distancia [km]')
+ylabel(h, 'Velocidad (U)','fontsize',16)    
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_u_ver)) max(max(prom_u_inv))])
+set(gca,'Fontsize',14)
+caxis([-0.2 0.2])
 set(h,'Position', [0.920  0.104  0.016  0.812]);
+box on
+%suptitle('Two Subplots')
 
 %% Seeciones Verticales Temperatura 
 
@@ -337,154 +335,75 @@ hold on
 pcolor(x3,y3,prom_t_ver)
 colormap(jet)
 shading interp
-C = contour(x3,y3,prom_t_ver,[9 10 11 12],...
+C = contour(x3,y3,prom_t_ver,[6:2:14],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-% h = colorbar;
-set(gca,'ydir','reverse')
-% set(get(h,'title'),'string',{'[oxy]'},'FontName','Helvetica',...
-%        'FontSize',14,'FontWeight','bold');    
+text(-11.92,198.017,'N','Fontsize',16,...
+        'FontName','Courier','Color','k')  
+text(-11.92,198.017,'S','Fontsize',16,...
+        'FontName','Courier','Color','k') 
+set(gca,'ydir','reverse')  
 xlabel('Distancia [km]')
 ylabel('Profundidad [m]')
-title('Verano')
-text(1,220,'Lat= [-43.4490 -43.6844] ','Fontsize',13,...
-        'FontName','Arial','Color','k')
-text(1,215,'Lon=  -73.9250 ','Fontsize',13,...
-        'FontName','Arial','Color','k')    
-% ylabel(h, 'ml/L','fontsize',16)    
+title('Verano')      
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_t_ver)) max(max(prom_t_ver))])
-
+set(gca,'Fontsize',14)
+caxis([6 14])
+box on
 
 subplot(142)
 hold on
 pcolor(x3,y3,prom_t_oto)
 colormap(jet)
 shading interp
-C = contour(x3,y3,prom_t_oto,[10 10.8 11.6],...
+C = contour(x3,y3,prom_t_oto,[6:2:14],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-% h = colorbar;
-set(gca,'ydir','reverse')
-% set(get(h,'title'),'string',{'[oxy]'},'FontName','Helvetica',...
-%        'FontSize',14,'FontWeight','bold');    
-title('Otoño')    
-% ylabel(h, 'ml/L','fontsize',16)    
-axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_t_ver)) max(max(prom_t_ver))])
-
-subplot(143)
-hold on
-pcolor(x3,y3,prom_t_inv)
-colormap(jet)
-shading interp
-C = contour(x3,y3,prom_t_inv,[10 10.3 10.5],...
-            '--k','LineWidth',2);
-clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-set(gca,'ydir','reverse')   
-title('Invierno')        
-axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_t_ver)) max(max(prom_t_ver))])
-
-
-subplot(144)
-hold on
-pcolor(x3,y3,prom_t_pri)
-colormap(jet)
-shading interp
-C = contour(x3,y3,prom_t_pri,[9.2 10 10.4],...
-            '--k','LineWidth',2);
-clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-h = colorbar;
-set(gca,'ydir','reverse')
-set(get(h,'title'),'string',{'[°C]'},'FontName','Helvetica',...
-       'FontSize',14,'FontWeight','bold');   
-title('Primavera')
-ylabel(h, 'Temperatura','fontsize',16)    
-axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_t_ver)) max(max(prom_t_ver))])
-set(h,'Position', [0.920  0.104  0.016  0.812]);
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-figure()
-subplot(141)
-hold on
-pcolor(x3,y3,prom_t_ver)
-colormap(jet)
-shading interp
-C = contour(x3,y3,prom_t_ver,[-0.05 0 0.05],...
-            '--k','LineWidth',2);
-clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-% h = colorbar;
-set(gca,'ydir','reverse')
-% set(get(h,'title'),'string',{'[oxy]'},'FontName','Helvetica',...
-%        'FontSize',14,'FontWeight','bold');    
 xlabel('Distancia [km]')
-ylabel('Profundidad [m]')
-title('Verano')
-text(1,180,'Lat= [-43.4490 -43.6844] ','Fontsize',13,...
-        'FontName','Arial','Color','k')
-text(1,185,'Lon=  -73.9250 ','Fontsize',13,...
-        'FontName','Arial','Color','k')    
-% ylabel(h, 'ml/L','fontsize',16)    
+set(gca,'ydir','reverse') 
+title('Otoño')       
 axis tight
-set(gca,'Fontsize',13)
-colorbar
-
-subplot(142)
-hold on
-pcolor(x3,y3,prom_t_oto)
-colormap(jet)
-shading interp
-C = contour(x3,y3,prom_t_oto,[-0.05 0 0.05],...
-            '--k','LineWidth',2);
-clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-% h = colorbar;
-set(gca,'ydir','reverse')
-% set(get(h,'title'),'string',{'[oxy]'},'FontName','Helvetica',...
-%        'FontSize',14,'FontWeight','bold');    
-title('Otoño')    
-% ylabel(h, 'ml/L','fontsize',16)    
-axis tight
-set(gca,'Fontsize',13)
-colorbar 
+set(gca,'Fontsize',14)
+caxis([6 14])
+box on
 
 subplot(143)
 hold on
 pcolor(x3,y3,prom_t_inv)
 colormap(jet)
 shading interp
-C = contour(x3,y3,prom_t_inv,[-0.03 0 0.03],...
+C = contour(x3,y3,prom_t_inv,[6:2:14],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-set(gca,'ydir','reverse')   
+set(gca,'ydir','reverse') 
+xlabel('Distancia [km]')
 title('Invierno')        
 axis tight
-set(gca,'Fontsize',13)
-colorbar
+set(gca,'Fontsize',14)
+caxis([6 14])
+box on
 
 subplot(144)
 hold on
 pcolor(x3,y3,prom_t_pri)
 colormap(jet)
 shading interp
-C = contour(x3,y3,prom_t_pri,[-0.05 0 0.05],...
+C = contour(x3,y3,prom_t_pri,[6:2:12],...
             '--k','LineWidth',2);
-clabel(C,'FontWeight','bold','Color','k','FontSize',12)
+clabel(C,'FontWeight','bold','Color','k','FontSize',14)
 h = colorbar;
 set(gca,'ydir','reverse')
 set(get(h,'title'),'string',{'[°C]'},'FontName','Helvetica',...
        'FontSize',14,'FontWeight','bold');   
 title('Primavera')
-ylabel(h, 'Temperatura','fontsize',16)    
+ylabel(h, 'Temperatura','fontsize',16) 
+xlabel('Distancia [km]')
 axis tight
-set(gca,'Fontsize',13)
+set(gca,'Fontsize',14)
+caxis([6 14])
 set(h,'Position', [0.920  0.104  0.016  0.812]);
+box on
+
 
 
 %% Secciones Verticales Salinidad
@@ -536,63 +455,60 @@ hold on
 pcolor(x,y,prom_sal_ver)
 colormap(jet)
 shading interp
-C = contour(x,y,prom_sal_ver,[33.3 33.5 33.6 33.9],...
+C = contour(x,y,prom_sal_ver,[33.2:0.2:34.4],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-% h = colorbar;
-set(gca,'ydir','reverse')
-% set(get(h,'title'),'string',{'[oxy]'},'FontName','Helvetica',...
-%        'FontSize',14,'FontWeight','bold');    
+text(-11.92,198.017,'N','Fontsize',16,...
+        'FontName','Courier','Color','k')  
+text(-11.92,198.017,'S','Fontsize',16,...
+        'FontName','Courier','Color','k') 
+set(gca,'ydir','reverse')   
 xlabel('Distancia [km]')
 ylabel('Profundidad [m]')
-title('Verano')
-text(1,220,'Lat= [-43.4490 -43.6844] ','Fontsize',13,...
-        'FontName','Arial','Color','k')
-text(1,215,'Lon=  -73.9250 ','Fontsize',13,...
-        'FontName','Arial','Color','k')    
-% ylabel(h, 'ml/L','fontsize',16)    
+title('Verano')      
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_sal_ver)) max(max(prom_sal_oto))])
+set(gca,'Fontsize',14)
+caxis([33.2 34.4])
+box on
 
 subplot(142)
 hold on
 pcolor(x,y,prom_sal_oto)
 colormap(jet)
 shading interp
-C = contour(x,y,prom_sal_oto,[33.3 33.5 33.6 33.9],...
+C = contour(x,y,prom_sal_oto,[33.0:0.2:34,4],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-% h = colorbar;
+xlabel('Distancia [km]')
 set(gca,'ydir','reverse')
-% set(get(h,'title'),'string',{'[oxy]'},'FontName','Helvetica',...
-%        'FontSize',14,'FontWeight','bold');    
-title('Otoño')    
-% ylabel(h, 'ml/L','fontsize',16)    
+title('Otoño')       
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_sal_ver)) max(max(prom_sal_oto))])
+set(gca,'Fontsize',14)
+caxis([33.2 34.4])
+box on
 
 subplot(143)
 hold on
 pcolor(x,y,prom_sal_inv)
 colormap(jet)
 shading interp
-C = contour(x,y,prom_sal_inv,[33.5 33.6 33.7 33.8],...
+C = contour(x,y,prom_sal_inv,[33.2:0.2:34.4],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
 set(gca,'ydir','reverse')   
-title('Invierno')        
+title('Invierno') 
+xlabel('Distancia [km]')
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_sal_ver)) max(max(prom_sal_oto))])
+set(gca,'Fontsize',14)
+caxis([33.2 34.4])
+box on
 
 subplot(144)
 hold on
 pcolor(x,y,prom_sal_pri)
 colormap(jet)
 shading interp
-C = contour(x,y,prom_sal_pri,[33.5 33.6 33.7 33.8],...
+C = contour(x,y,prom_sal_pri,[33.2:0.2:34.4],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
 h = colorbar;
@@ -600,11 +516,13 @@ set(gca,'ydir','reverse')
 set(get(h,'title'),'string',{'[PSU]'},'FontName','Helvetica',...
        'FontSize',14,'FontWeight','bold');   
 title('Primavera')
+xlabel('Distancia [km]')
 ylabel(h, 'Salinidad','fontsize',16)    
 axis tight
-set(gca,'Fontsize',13)
+set(gca,'Fontsize',14)
 set(h,'Position', [0.920  0.104  0.016  0.812]);
-caxis([min(min(prom_sal_ver)) max(max(prom_sal_oto))])
+caxis([33.2 34.4])
+box on
 
 %% Secciones Verticales Nitrato NO3
 
@@ -653,76 +571,74 @@ hold on
 pcolor(x,y,prom_no3_ver)
 colormap(jet)
 shading interp
-C = contour(x,y,prom_no3_ver,[8 12 16 18],...
+C = contour(x,y,prom_no3_ver,[6:3:33],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-% h = colorbar;
-set(gca,'ydir','reverse')
-% set(get(h,'title'),'string',{'[oxy]'},'FontName','Helvetica',...
-%        'FontSize',14,'FontWeight','bold');    
+text(-11.92,198.017,'N','Fontsize',16,...
+        'FontName','Courier','Color','k')  
+text(-11.92,198.017,'S','Fontsize',16,...
+        'FontName','Courier','Color','k')
+set(gca,'ydir','reverse')   
 xlabel('Distancia [km]')
 ylabel('Profundidad [m]')
-title('Verano')
-text(1,220,'Lat= [-43.4490 -43.6844] ','Fontsize',13,...
-        'FontName','Arial','Color','k')
-text(1,215,'Lon=  -73.9250 ','Fontsize',13,...
-        'FontName','Arial','Color','k')    
-% ylabel(h, 'ml/L','fontsize',16)    
+title('Verano')     
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_no3_ver)) max(max(prom_no3_oto))])
+set(gca,'Fontsize',14)
+caxis([6 33])
+box on
 
 subplot(142)
 hold on
 pcolor(x,y,prom_no3_oto)
 colormap(jet)
 shading interp
-C = contour(x,y,prom_no3_oto,[10 14 16 19],...
+C = contour(x,y,prom_no3_oto,[6:3:33],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
-% h = colorbar;
-set(gca,'ydir','reverse')
-% set(get(h,'title'),'string',{'[oxy]'},'FontName','Helvetica',...
-%        'FontSize',14,'FontWeight','bold');    
+set(gca,'ydir','reverse')    
 title('Otoño')    
-% ylabel(h, 'ml/L','fontsize',16)    
+xlabel('Distancia [km]') 
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_no3_ver)) max(max(prom_no3_oto))])
+set(gca,'Fontsize',14)
+caxis([6 33])
+box on
 
 subplot(143)
 hold on
 pcolor(x,y,prom_no3_inv)
 colormap(jet)
 shading interp
-C = contour(x,y,prom_no3_inv,[13.5 15 16 17],...
+C = contour(x,y,prom_no3_inv,[6:3:33],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
 set(gca,'ydir','reverse')   
-title('Invierno')        
+title('Invierno')
+xlabel('Distancia [km]')
 axis tight
-set(gca,'Fontsize',13)
-caxis([min(min(prom_no3_ver)) max(max(prom_no3_oto))])
+set(gca,'Fontsize',14)
+caxis([6 33])
+box on
 
 subplot(144)
 hold on
 pcolor(x,y,prom_no3_pri)
 colormap(jet)
 shading interp
-C = contour(x,y,prom_no3_pri,[12 15 16 18],...
+C = contour(x,y,prom_no3_pri,[6:3:33],...
             '--k','LineWidth',2);
 clabel(C,'FontWeight','bold','Color','k','FontSize',12)
 h = colorbar;
 set(gca,'ydir','reverse')
 set(get(h,'title'),'string',{'[NO3]'},'FontName','Helvetica',...
-       'FontSize',14,'FontWeight','bold');   
+       'FontSize',14,'FontWeight','bold','Position',[10.368 600.914 0]);   
 title('Primavera')
+xlabel('Distancia [km]')
 ylabel(h, '[\mumol/L]','fontsize',16)    
 axis tight
-set(gca,'Fontsize',13)
+set(gca,'Fontsize',14)
 set(h,'Position', [0.920  0.104  0.016  0.812]);
-caxis([min(min(prom_no3_ver)) max(max(prom_no3_oto))])
-
-
+caxis([6 33])
+box on
+set(h,'XTick',[6:3:33])
 
 
