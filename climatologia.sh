@@ -59,7 +59,7 @@ ncra -F -d time,${k},144,12 data2000-2011.nc clim_2000-2011_${k}.nc
 done
 
 
-ncrcat clim_2000-2011_??.nc clim_month_2000-20011.nc
+ncrcat clim_2000-2011_??.nc clim_month_2000-2011.nc
 
 
 
