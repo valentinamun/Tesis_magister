@@ -29,7 +29,13 @@ time = mosa_native.end_time;
 lon = np.linspace(-74, -74, 10000); 
 lat = np.linspace(-43.8, -43.26, 10000);  
 z = -(np.random.rand(10000)*150 + 50);
-o.seed_elements(lon, lat, z=z, number=10000, time=time)
+
+
+for i in range(1,25):
+    ini_date=time-timedelta(hours=i)
+    o.seed_elements(lon, lat, z=z, number=10000, time=ini_time)
+
+
 o.disable_vertical_motion()
 
 #o.run(steps=25920, time_step=-100, time_step_output=3600, outfile='back_opendrift.nc')
