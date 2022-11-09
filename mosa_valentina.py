@@ -14,6 +14,7 @@ from opendrift.models.oceandrift import OceanDrift
 import numpy as np
 from opendrift.readers import reader_ROMS_native
 import os.path
+from datetime import datetime, timedelta
 
 #Cargar simualción y directorio
 os.chdir("/data2/matlab/MOSA_BGQ/")
@@ -36,13 +37,13 @@ z = -(np.random.rand(10000)*150 + 50);
 for i in range(1,25):
     ini_date=time-timedelta(hours=i)
     o.seed_elements(lon, lat, z=z, number=10000, time=ini_time)
-
+##    o.run(steps=25920, time_step=-100, time_step_output=3600, outfile='/data2/matlab/MOSA_BGQ/Valentina/mosa_opendrift_VM_.nc')
 
 o.disable_vertical_motion()
 
 #Lanzar simulación
 #o.run(steps=25920, time_step=-100, time_step_output=3600, outfile='back_opendrift.nc')
-o.run(steps=25920, time_step=-100, time_step_output=3600, outfile='/data2/matlab/MOSA_BGQ/Valentina/mosa_opendrift_VM_10000.nc')
+o.run(steps=25920, time_step=-100, time_step_output=3600, outfile='/data2/matlab/MOSA_BGQ/Valentina/mosa_opendrift_VM_240000.nc')
 
 #%%
 # Graficar y guardar resultados
