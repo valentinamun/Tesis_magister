@@ -1,0 +1,49 @@
+close all; clear all
+
+    %%file='mosa_back_opendrift.nc';
+    %%file='mosa_opendrift.nc';
+    %%file='mosa_test2_opendrift.nc';
+    %%name='mosa_opendrift_100000';
+
+    %file='mosa_opendrift_AS_100000_0-50m.nc';
+    file='mosa_opendrift_AS_100000.nc';  %50-200 m
+    file='mosa_opendrift_AS_50000.nc';   %50-200 m
+    file='mosa_opendrift_AS_10000.nc';   %50-200 m
+
+    name='mosa_opendrift_AS_100000_0-50m';
+    
+    lon=ncread(file,'lon');
+    lat=ncread(file,'lat');
+    lon2=lon(end,:);
+    lat2=lat(end,:);
+
+    z=ncread(file,'z');        
+    z2=z(1,:);  
+    z3=z(end,:);
+
+    min(z2)
+    max(z2)
+    min(z3)
+    max(z3)
+
+    ene=length(lat2)    
+    indx_in=find(lon2  < -74.00);
+    in=length(indx_in)/ene*100
+
+    indx_out=find(lon2  > -74.00);
+    lat3=lat2;
+    lat3(indx_in)=[];    
+    indx_up=find(lat3    >  -43.5);
+    indx_down=find(lat3  <  -43.5);
+    
+    up=length(indx_up)/ene*100
+    down=length(indx_down)/ene*100
+
+    total=up+down+in
+
+%%    h=figure('Position', get(0, 'Screensize'));
+    geodensityplot(lat2, lon2,'FaceColor','interp')
+    colorbar
+%%    jpgname =sprintf('geodensity_');
+%%    saveas(h, fullfile(path, [jpgname name '.jpg']));
+
