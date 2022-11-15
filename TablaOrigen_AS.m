@@ -27,7 +27,7 @@ close all; clear all
     lat2=lat1(indx_d);
 
     z2=z_ini(indx_d);
-    z3=z_ini(indx_d);
+    z3=z_end(indx_d);
 
     % 
     %            
