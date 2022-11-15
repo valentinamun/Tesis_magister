@@ -1,11 +1,4 @@
 close all; clear all
-%%start
-
-    %%file='mosa_back_opendrift.nc';
-    %%file='mosa_opendrift.nc';
-    %%file='mosa_test2_opendrift.nc';
-    %%name='mosa_opendrift_100000';
-
 
      file='./Valentina/mosa_opendrift_VM_10000.nc';
      file='./Valentina/mosa_opendrift_VM_50000.nc';
@@ -36,6 +29,9 @@ close all; clear all
     z2=z_ini(indx_d);
     z3=z_ini(indx_d);
 
+    % 
+    %            
+    %
     depths = [min(z_ini) max(z_ini) min(z_end) max(z_end) min(z2)  max(z2)   min(z3)   max(z3)]
 
     ene=length(lat2)
@@ -65,9 +61,3 @@ close all; clear all
 
     disp(['in ' 'up ' 'down ' 'total '])
     procentajes=[in up down total]
-
-%%%    h=figure('Position', get(0, 'Screensize'));
-%%    geodensityplot(lat2, lon2,'FaceColor','interp')
-%%    colorbar
-%%%    jpgname =sprintf('geodensity_');
-%%    saveas(h, fullfile(path, [jpgname name '.jpg']));
