@@ -35,7 +35,7 @@ z = -(np.random.rand(10000)*150 + 50);
 
 #Rango de liberación de particulas 
 for i in range(1,25):
-    ini_date=time-timedelta(hours=i)
+    ini_time=time-timedelta(hours=i)
     o.seed_elements(lon, lat, z=z, number=10000, time=ini_time)
 ##    o.run(steps=25920, time_step=-100, time_step_output=3600, outfile='/data2/matlab/MOSA_BGQ/Valentina/mosa_opendrift_VM_.nc')
 
