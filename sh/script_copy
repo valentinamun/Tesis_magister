@@ -1,0 +1,4 @@
+#!/bin/sh
+set -x
+scp -P 26662 /home/asepulveda2/MOSA_BGQ_FUNCIONA/Valentina/mosa_BGQ_avg_VM_M1_DM_1.nc  matlab@152.74.220.56:/data2/matlab/MOSA_BGQ/Valentina/Nuevas_Simulaciones
+exit
