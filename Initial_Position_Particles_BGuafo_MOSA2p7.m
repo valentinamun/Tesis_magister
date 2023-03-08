@@ -16,3 +16,6 @@ plot(g_lat,g_z,'x')
 %
 % 4893 of 1000
 %
+
+all=[g_lon g_lat g_z];
+save -ascii vert_section_BGuafo.txt all
