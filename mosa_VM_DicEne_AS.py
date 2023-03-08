@@ -44,9 +44,8 @@ for filename in glob.glob('vert_section_BGuafo.txt'):
 ###np.random.seed(0); #las profundidades "random" son siempre las misma
 ###z = -(np.random.rand(10000)*200);
 
-i = 1
-#for i in range(1,722):
-o.seed_elements(lon, lat, z=z, number=4893, time=ini_time) #=(time-timedelta(hours=i)))
+for i in range(1,722):
+   o.seed_elements(lon, lat, z=z, number=4893, time=(ini_time-timedelta(hours=i)))
 #   o.seed_elements(lon, lat, z=z, number=10000, time=(time-timedelta(seconds=i*3600)))
 
 #o.disable_vertical_motion()
@@ -56,7 +55,7 @@ o.set_config('general:seafloor_action','deactivate') # previous, or lift_to_seaf
 o.set_config('general:use_auto_landmask', True)
 
 # 25920
-o.run(steps=25920, time_step=-100, time_step_output=3600, outfile='back_opendrift.nc')
+o.run(steps=518040, time_step=-100, time_step_output=3600, outfile='mosa_VM_1mes_horario_back_AS.nc')
 #o.run(steps=518400, time_step=-100, time_step_output=3600, outfile='mosa_VM_2meses_horario_AS.nc')
 
 #%%
