@@ -49,13 +49,14 @@ o.vertical_advection()
 
 o.set_config('general:seafloor_action','deactivate') # previous, or lift_to_seafloor, or deactivate
 o.set_config('general:use_auto_landmask', True)
+o.set_config('drift:max_age_seconds',2592000)   # 30 days!
 
 for i in range(1,122):  # 5 days
    o.seed_elements(lon, lat, z=z, number=4893, time=(ini_time-timedelta(hours=i)))
 #   o.seed_elements(lon, lat, z=z, number=10000, time=(time-timedelta(seconds=i*3600)))
 
 # 30240 = 35 days
-o.run(steps=30240, time_step=-100, time_step_output=3600, outfile='mosa_VM_1mes_horario_back_AS_D1-5.nc')
+o.run(steps=52840, time_step=-100, time_step_output=3600, outfile='mosa_VM_1mes_horario_back_AS_D1-5.nc')
 
 #
 # Print and plot results
