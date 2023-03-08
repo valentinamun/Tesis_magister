@@ -44,23 +44,22 @@ for filename in glob.glob('vert_section_BGuafo.txt'):
 ###np.random.seed(0); #las profundidades "random" son siempre las misma
 ###z = -(np.random.rand(10000)*200);
 
-for i in range(1,722):
-   o.seed_elements(lon, lat, z=z, number=4893, time=(ini_time-timedelta(hours=i)))
-#   o.seed_elements(lon, lat, z=z, number=10000, time=(time-timedelta(seconds=i*3600)))
-
 #o.disable_vertical_motion()
 o.vertical_advection()
 
 o.set_config('general:seafloor_action','deactivate') # previous, or lift_to_seafloor, or deactivate
 o.set_config('general:use_auto_landmask', True)
 
-# 25920
-o.run(steps=518040, time_step=-100, time_step_output=3600, outfile='mosa_VM_1mes_horario_back_AS.nc')
-#o.run(steps=518400, time_step=-100, time_step_output=3600, outfile='mosa_VM_2meses_horario_AS.nc')
+for i in range(1,122):  # 5 days
+   o.seed_elements(lon, lat, z=z, number=4893, time=(ini_time-timedelta(hours=i)))
+#   o.seed_elements(lon, lat, z=z, number=10000, time=(time-timedelta(seconds=i*3600)))
 
-#%%
+# 30240 = 35 days
+o.run(steps=30240, time_step=-100, time_step_output=3600, outfile='mosa_VM_1mes_horario_back_AS_D1-5.nc')
+
+#
 # Print and plot results
-# print(o)
+#
 #o.plot(buffer=.2, fast=True, linecolor = 'z',filename='mosa_VM_2meses_horario_AS.png')
 #o.animation(filename="/data2/matlab/MOSA_BGQ/Valentina/mosa_opendrift_sup_VM_100000.mp4",linecolor="z",fast = True)
 
