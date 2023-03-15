@@ -177,8 +177,58 @@ caxis([-0.4 0.4])
 title(h,'[m/s]')
 set(gca,'Fontsize',18)
 
-%  lat=xx;
-%  z=mask;
-%  save('lat.mat','lat');
-%  save('z.mat','z');
-%  save('residual.mat','residual');
+%   lat=xx;
+%   z=mask;
+%   save('lat.mat','lat');
+%   save('z.mat','z');
+%   save('residual.mat','residual');
+
+%% Calculo del area de cada celda
+clear all
+close all
+clc
+
+load('residual.mat'); load('lat.mat') ; load('z.mat')
+
+%Calculo del largo de cada celda dl
+
+dx=abs(lat(1,1)-lat(1,2)); %Diferencia entre latitudes
+dx=dx*111.1*1000; %Transformar de grados a metros
+
+%Calculo del ancho de cada celda
+
+nc=netcdf('u_Y1_M3_guafo.nc','r');
+h=ncread('mosa_BGQ_h_guafo.nc','h');
+s_rho=nc{'s_rho'}(:);
+
+dy=s_rho*h'; %Largo de cada celda
+
+A=abs(dy*dx); %Area de la celda
+
+T=A.*residual; 
+
+TN = nansum(nansum(T));
+
+cmap = colormap_cpt('Balance.cpt'); 
+
+figure()
+subplot(121)
+pcolor(lat,z,T)
+ylabel('Profundidad [m]')
+xlabel('Latitud')
+title('Transporte')
+colormap(cmap)
+shading interp
+colorbar
+caxis([-4.2543e+04 4.2543e+04])
+set(gca,'Fontsize',18)
+
+subplot(122)
+pcolor(lat,z,residual)
+xlabel('Latitud')
+title(' Corriente Residual')
+colormap(cmap)
+shading interp
+colorbar
+caxis([-0.4 0.4])
+set(gca,'Fontsize',18)
