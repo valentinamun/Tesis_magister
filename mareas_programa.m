@@ -140,13 +140,9 @@ colorbar
 title('Residual')
 
 %% Grafico seccion Boca del Guafo
-mask=s_rho*h'; %componnetes sigmas multiplicados por la batimetria
-z=mask(:);     %convertir la matriz a un vector
-
-
-pp=ones([42,33]);
-xx=pp.*lat'
-y=xx(:);
+mask=s_rho*h'; %Componnetes sigmas multiplicados por la batimetria
+pp=ones([42,33]); %Matriz de uno para crear las latitudes
+xx=pp.*lat' %Matriz de latitudes
 
 cmap = colormap_cpt('Balance.cpt');
 
@@ -161,6 +157,7 @@ h=colorbar
 caxis([-0.4 0.4])
 title(h,'[m/s]')
 set(gca,'Fontsize',18)
+
 
 ff=residual(:,7:30);
 yy=xx(:,7:30);
@@ -180,3 +177,8 @@ caxis([-0.4 0.4])
 title(h,'[m/s]')
 set(gca,'Fontsize',18)
 
+%  lat=xx;
+%  z=mask;
+%  save('lat.mat','lat');
+%  save('z.mat','z');
+%  save('residual.mat','residual');
