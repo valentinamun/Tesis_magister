@@ -1,11 +1,10 @@
-%Trayectoria de las particulas que no se han pegado en un tiempo final
-
 clear all
 close all
 clc
+
 addpath(genpath('/home/valentina/Descargas/m_map1.4/m_map/'))
-dir= '/media/valentina/TOSHIBA/OPENDRIFT/Nuevas _Simulaciones/Mareas/AÑO11/'
-file= [dir 'mosa_VM_back_tides_10000_0-200_horaria_mar.nc']
+dir= '/media/valentina/TOSHIBA/OPENDRIFT/Simualacion_final/Mareas/'
+file= [dir 'mosa_VM_1mes_horario_back_AS_27-31Enero.nc']
 ncdisp(file)
 
 lon=ncread([file],'lon');
@@ -13,27 +12,32 @@ lat=ncread([file],'lat');
 z=ncread([file],'z');
 status=ncread([file],'status');
 
-ss=status(721,:);
 
 %Particulas que no se han pegado en la costa en el tiempo final 
 %Se utilizo z<0,ya que habia valores positivos de 9.96 correspondiente a errores
 
- ind_up=find((z(721,:)<0) & (lat(721,:)>-43.5) & (lon(721,:)<-74));
- ind_down=find((z(721,:)<0) & (lat(721,:)<-43.5) & (lon(721,:)<-74));
- ind_in_up=find((z(721,:)<0) & (lat(721,:)>-43.5) & (lon(721,:)>-74));
- ind_in_down=find((z(721,:)<0) & (lat(721,:)<-43.5) & (lon(721,:)>-74));
+%  ind_up=find((z(721,:)<0) & (lat(721,:)>-43.5) & (lon(721,:)<-74));
+%  ind_down=find((z(721,:)<0) & (lat(721,:)<-43.5) & (lon(721,:)<-74));
+%  ind_in_up=find((z(721,:)<0) & (lat(721,:)>-43.5) & (lon(721,:)>-74));
+%  ind_in_down=find((z(721,:)<0) & (lat(721,:)<-43.5) & (lon(721,:)>-74));
+ 
+  ind_up=find((lat(841,:)>-43.5) & (lon(841,:)<-74));
+  ind_down=find((lat(841,:)<-43.5) & (lon(841,:)<-74));
+  ind_in_up=find((lat(841,:)>-43.5) & (lon(841,:)>-74));
+  ind_in_down=find((lat(841,:)<-43.5) & (lon(841,:)>-74));
+ 
  
 %Campo de particulas en el tiempo 2
 
-lat_ini=lat(2,:);
-lon_ini=lon(2,:);
-z_ini=z(2,:);
+lat_ini=lat(1,:);
+lon_ini=lon(1,:);
+z_ini=z(1,:);
 indx=find(lat_ini>0);
 lat_ini(indx)=NaN;
 lon_ini(indx)=NaN;
 z_ini(indx)=NaN;
 
-%% Graficos 
+%% Graficos de seccion en la Boca del Guafo
 
 figure(1)
 subplot(151)
@@ -83,6 +87,74 @@ set(gca, 'FontSize', 17)
 legend('Inicial','Norte','Sur',' Mar Interior','Fiordos')
 box on 
 
+%% Grafico de particulas horizontal
+
+ figure()
+ %subplot(131)
+ m_proj('miller','lon',[-76 -72],'lat',[-46 -38.99])
+ %m_etopo2('contourf',[-6000:10:0 -6000 10 0 ],'edgecolor','none');
+ m_gshhs_f('patch',[0.9 0.9 0.9]);    % Coastline...
+ m_gshhs_f('speckle','color','k');    % with speckle added
+ m_grid('linewi',2,'linest','none','tickdir','out','fontsize',12);
+ xlabel('Longitud','FontSize',16)
+ ylabel('Latitud','FontSize',16)
+ title('Particulas del Norte')
+ %l= colorbar 
+ %colormap(m_colmap('blues')); 
+ set(gca, 'FontSize', 17)
+ for i=1:100
+ hold on
+ %m_plot(lon(:,ind_up(i)),lat(:,ind_up(i)),'marker','o','color','k','markerfacecolor','r','markersize',4); 
+ m_scatter(lon(:,ind_up(i)),lat(:,ind_up(i)),30.0,z(:,ind_up(i)),'filled'); 
+ caxis([-340 0])
+ hold off 
+ end
+
+% 
+%  subplot(132)
+%  m_proj('miller','lon',[-76 -72],'lat',[-46 -38.99])
+%  %m_etopo2('contourf',[-6000:10:0 -6000 10 0 ],'edgecolor','none');
+%  m_gshhs_f('patch',[0.9 0.9 0.9]);    % Coastline...
+%  m_gshhs_f('speckle','color','k');    % with speckle added
+%  m_grid('linewi',2,'linest','none','tickdir','out','fontsize',12);
+%  xlabel('Longitud','FontSize',16)
+%  title('Particulas del Sur')
+%  %l= colorbar 
+%  %colormap(m_colmap('blues')); 
+%  set(gca, 'FontSize', 17)
+%  for i=50:57
+%  hold on
+%  %m_plot(lon(:,ind_up(i)),lat(:,ind_up(i)),'marker','o','color','k','markerfacecolor','r','markersize',4); 
+%  m_scatter(lon(:,ind_down(i)),lat(:,ind_down(i)),30.0,z(:,ind_down(i)),'filled'); 
+%  caxis([-340 0])
+%  hold off 
+%  end
+%  
+%  subplot(133)
+%  m_proj('miller','lon',[-76 -72],'lat',[-46 -38.99])
+%  %m_etopo2('contourf',[-6000:10:0 -6000 10 0 ],'edgecolor','none');
+%  m_gshhs_f('patch',[0.9 0.9 0.9]);    % Coastline...
+%  m_gshhs_f('speckle','color','k');    % with speckle added
+%  m_grid('linewi',2,'linest','none','tickdir','out','fontsize',12);
+%  xlabel('Longitud','FontSize',16)
+%  title('Particulas del Mar Interior')
+%  set(gca, 'FontSize', 17)
+%  for i=30:37
+%  hold on
+%  %m_plot(lon(:,ind_up(i)),lat(:,ind_up(i)),'marker','o','color','k','markerfacecolor','r','markersize',4); 
+%  m_scatter(lon(:,ind_in(i)),lat(:,ind_in(i)),30.0,z(:,ind_in(i)),'filled'); 
+%  h=colorbar
+%  set(h,'Position',[0.913 0.11 0.016 0.812])%
+%  caxis([-340 0])
+%  ylabel(h,'[m]')
+%  set(gca,'Fontsize',14)
+%  hold off 
+%  end
+
+
+
+
+
 %% Porcentajes
  
    ini=length(lat); %Total inical opendrift
@@ -116,4 +188,3 @@ box on
    disp(['in_up ' ' in_down '   'up ' 'down ' 'total_np' ' ini'])
    cantidad=[length(ind_in_up) length(ind_in_down) length(ind_up) length(ind_down) total_np ini]
  
-   
