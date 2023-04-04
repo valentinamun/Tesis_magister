@@ -116,11 +116,11 @@ for y=1:33
     end
 end
  
- save -ascii Guafo_ampM2.txt ampM2
- save -ascii Guafo_ampO1.txt ampO1
- save -ascii Guafo_phaM2.txt phaM2
- save -ascii Guafo_phaO1.txt phaO1
- save -ascii Guafo_residual.txt residual
+%  save -ascii Guafo_ampM2.txt ampM2
+%  save -ascii Guafo_ampO1.txt ampO1
+%  save -ascii Guafo_phaM2.txt phaM2
+%  save -ascii Guafo_phaO1.txt phaO1
+%  save -ascii Guafo_residual.txt residual
 
 figure(1)
 pcolor(flipud(ampM2))
@@ -213,22 +213,44 @@ cmap = colormap_cpt('Balance.cpt');
 
 figure()
 subplot(121)
-pcolor(lat,z,T)
+hold on
+pcolor(lat(:,7:30),z(:,7:30),T(:,7:30))
+C = contour(lat(:,7:30),z(:,7:30),T(:,7:30),[-1600000 0 160000],...
+            '--w','LineWidth',2);
 ylabel('Profundidad [m]')
 xlabel('Latitud')
 title('Transporte')
 colormap(cmap)
 shading interp
-colorbar
-caxis([-4.2543e+04 4.2543e+04])
-set(gca,'Fontsize',18)
-
+a=colorbar;
+ylabel(a,'[m^3/s]','FontSize',17);
+caxis([-4.3e+04 4.3e+04])
+set(gca,'Fontsize',17)
+box on
 subplot(122)
-pcolor(lat,z,residual)
+hold on
+pcolor(lat(:,7:30),z(:,7:30),residual(:,7:30))
+C = contour(lat(:,7:30),z(:,7:30),residual(:,7:30),[-100 0 100],...
+            '--w','LineWidth',2);
+%clabel(C,'FontWeight','bold','Color','w','FontSize',12) 
 xlabel('Latitud')
-title(' Corriente Residual')
+title('Corriente Residual')
 colormap(cmap)
 shading interp
-colorbar
+a=colorbar;
+ylabel(a,'[m/s]','FontSize',17);
 caxis([-0.4 0.4])
-set(gca,'Fontsize',18)
+set(gca,'Fontsize',17)
+box on
+
+%% Calculo de los transportes
+
+TN = nansum(nansum(T))  %transporte neto
+idx_pos=find(T>0)
+idx_neg=find(T<0)
+TN_pos=nansum(nansum(T(idx_pos))) %Transporte neto entrando por la Boca del Guafo
+TN_neg=nansum(nansum(T(idx_neg))) %Transporte neto saliendo por la Boca del Guafo
+
+T = table(TN,TN_pos,TN_neg)
+
+
