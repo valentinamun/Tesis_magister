@@ -251,6 +251,8 @@ idx_neg=find(T<0)
 TN_pos=nansum(nansum(T(idx_pos))) %Transporte neto entrando por la Boca del Guafo
 TN_neg=nansum(nansum(T(idx_neg))) %Transporte neto saliendo por la Boca del Guafo
 
-T = table(TN,TN_pos,TN_neg)
+TT = table(TN,TN_pos,TN_neg)
+
+
 
 

@@ -1,3 +1,4 @@
+%Calculo de los componenetes mareales y la marea residuales
 clear all
 close all
 start
@@ -229,6 +230,8 @@ xlim([-43.8 -43.4])
 clear all
 close all
 clc
+start
+
 
 load('residual.mat'); load('lat.mat') ; load('z.mat')
 load('residual_mosa12.mat'); load('lat_mosa12.mat') ; load('z_mosa12.mat')
@@ -307,39 +310,50 @@ box on
 ylim([-210 0])
 xlim([-43.8 -43.4])
 
+% figure()
+% subplot(121)
+% hold on
+% pcolor(lat(:,7:30),z(:,7:30),T(:,7:30))
+% C = contour(lat(:,7:30),z(:,7:30),T(:,7:30),[-1600000 0 160000],...
+%             '--w','LineWidth',2);
+% ylabel('Profundidad [m]')
+% xlabel('Latitud')
+% title('Transporte')
+% colormap(cmap)
+% shading interp
+% a=colorbar;
+% ylabel(a,'[m^3/s]','FontSize',17);
+% caxis([-4.3e+04 4.3e+04])
+% set(gca,'Fontsize',17)
+% box on
+% 
+% subplot(122)
+% hold on
+% pcolor(lat(:,7:30),z(:,7:30),residual(:,7:30))
+% C = contour(lat(:,7:30),z(:,7:30),residual(:,7:30),[-100 0 100],...
+%             '--w','LineWidth',2);
+% %clabel(C,'FontWeight','bold','Color','w','FontSize',12) 
+% xlabel('Latitud')
+% title('Corriente Residual')
+% colormap(cmap)
+% shading interp
+% a=colorbar;
+% ylabel(a,'[m/s]','FontSize',17);
+% caxis([-0.4 0.4])
+% set(gca,'Fontsize',17)
+% box on
+
+%% Histogramas de las secciones 
+
 figure()
 subplot(121)
-hold on
-pcolor(lat(:,7:30),z(:,7:30),T(:,7:30))
-C = contour(lat(:,7:30),z(:,7:30),T(:,7:30),[-1600000 0 160000],...
-            '--w','LineWidth',2);
-ylabel('Profundidad [m]')
-xlabel('Latitud')
-title('Transporte')
-colormap(cmap)
-shading interp
-a=colorbar;
-ylabel(a,'[m^3/s]','FontSize',17);
-caxis([-4.3e+04 4.3e+04])
-set(gca,'Fontsize',17)
-box on
-
+histogram(T(:,7:30));
+title('Histograma del Transporte Neto MOSA 2.7km')
+set(gca,'FontSize',14)
 subplot(122)
-hold on
-pcolor(lat(:,7:30),z(:,7:30),residual(:,7:30))
-C = contour(lat(:,7:30),z(:,7:30),residual(:,7:30),[-100 0 100],...
-            '--w','LineWidth',2);
-%clabel(C,'FontWeight','bold','Color','w','FontSize',12) 
-xlabel('Latitud')
-title('Corriente Residual')
-colormap(cmap)
-shading interp
-a=colorbar;
-ylabel(a,'[m/s]','FontSize',17);
-caxis([-0.4 0.4])
-set(gca,'Fontsize',17)
-box on
-
+histogram(T2(:,7:30));
+title('Histograma del Transporte Neto MOSA 1.2km')
+set(gca,'FontSize',14)
 
 %% Tablas de Transporte 
 
@@ -356,9 +370,9 @@ TN_pos_2022=nansum(nansum(T2(idx_pos_2022))) %Transporte neto entrando por la Bo
 TN_neg_2022=nansum(nansum(T2(idx_neg_2022))) %Transporte neto saliendo por la Boca del Guafo
 
 
-T = table(TN_mosa,TN_2022,TN_pos_mosa,TN_pos_2022,TN_neg_mosa,TN_neg_2022)
+Tt = table(TN_mosa,TN_2022,TN_pos_mosa,TN_pos_2022,TN_neg_mosa,TN_neg_2022)
 
-writetable(T,'T.txt')
+writetable(Tt,'Tt.txt')
 
 
 
