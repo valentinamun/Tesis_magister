@@ -20,6 +20,7 @@ ampO1=aux_uvel*NaN;
 phaO1=aux_uvel*NaN;
 ampS2=aux_uvel*NaN;
 phaS2=aux_uvel*NaN;
+promU=aux_uvel*NaN;
 
 time1=nc{'time'}(:);
 
@@ -33,6 +34,7 @@ j=1;
 for y=1:33
     for z=1:42
         ts_u=uvel(:,z,y);
+        promU(z,y)=mean(ts_u);
         nivelmar=ts_u;
         if abs(max(nivelmar))+abs(min(nivelmar)) > 0
             
@@ -187,6 +189,21 @@ set(gca,'Fontsize',18)
 clear all
 close all
 clc
+
+
+figure(11)
+pcolor(xx,mask,flipud(promU))
+ylabel('Profundidad [m]')
+xlabel('Latitud')
+title('Promedio U')
+colormap(cmap)
+shading interp
+h=colorbar 
+caxis([-0.4 0.4])
+title(h,'[m/s]')
+set(gca,'Fontsize',18)
+
+
 
 load('residual.mat'); load('lat.mat') ; load('z.mat')
 
