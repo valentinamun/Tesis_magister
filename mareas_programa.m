@@ -1,4 +1,6 @@
-%Calculo de los componenetes mareales y la marea residuales
+%Calculo de los componenetes mareales y la marea residuales del modelo MOSA
+%2.7km
+
 clear all
 close all
 start
@@ -9,8 +11,10 @@ h=ncread('mosa_BGQ_h_guafo.nc','h');
 lat=ncread('mosa_BGQ_lat_guafo.nc','lat_rho');
 
 uvel=nc{'u'}(:,:,:,:);
-uvel=squeeze(uvel);
 s_rho=nc{'s_rho'}(:);
+
+aa=uvel(1,:,:)
+aa=squeeze(aa)
 
 aux_uvel=squeeze(uvel(1,:,:));
 residual=aux_uvel*NaN;
@@ -20,7 +24,6 @@ ampO1=aux_uvel*NaN;
 phaO1=aux_uvel*NaN;
 ampS2=aux_uvel*NaN;
 phaS2=aux_uvel*NaN;
-promU=aux_uvel*NaN;
 
 time1=nc{'time'}(:);
 
@@ -29,12 +32,12 @@ path_des =  '/home/valentina/Escritorio/mareas/';  %Carpeta de destino
 fichero_out='Armonicos_Guafo.txt';  %Nombre del fichero de resultados
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 j=1; 
 
 for y=1:33
     for z=1:42
         ts_u=uvel(:,z,y);
-        promU(z,y)=mean(ts_u);
         nivelmar=ts_u;
         if abs(max(nivelmar))+abs(min(nivelmar)) > 0
             
@@ -168,7 +171,7 @@ maskk=mask(:,7:30);
 cmap = colormap_cpt('Balance.cpt');
 
 figure(6)
-pcolor(yy,maskk,flipud(ff))
+pcolor(yy,maskk,ff)
 ylabel('Profundidad [m]')
 xlabel('Latitud')
 title('Residual')
@@ -177,6 +180,7 @@ shading interp
 h=colorbar 
 caxis([-0.4 0.4])
 title(h,'[m/s]')
+set(gca,'Xdir','reverse')
 set(gca,'Fontsize',18)
 
 %   lat=xx;
@@ -190,22 +194,28 @@ clear all
 close all
 clc
 
+load('residual.mat'); load('lat.mat') ; load('z.mat')
 
-figure(11)
-pcolor(xx,mask,flipud(promU))
-ylabel('Profundidad [m]')
+%Figura de la Corriente residual
+
+cmap = colormap_cpt('Balance.cpt'); 
+
+figure()
+hold on
+pcolor(lat(:,7:30),z(:,7:30),residual(:,7:30))
+C = contour(lat(:,7:30),z(:,7:30),residual(:,7:30),[-100 0 100],...
+            '--w','LineWidth',2);
+%clabel(C,'FontWeight','bold','Color','w','FontSize',12) 
 xlabel('Latitud')
-title('Promedio U')
+title('Corriente Residual MOSA 2.7 km')
 colormap(cmap)
 shading interp
-h=colorbar 
+a=colorbar;
+ylabel(a,'[m/s]','FontSize',17);
 caxis([-0.4 0.4])
-title(h,'[m/s]')
-set(gca,'Fontsize',18)
-
-
-
-load('residual.mat'); load('lat.mat') ; load('z.mat')
+set(gca,'Fontsize',17)
+set(gca,'Xdir','reverse')
+box on
 
 %Calculo del largo de cada celda dl
 
@@ -226,41 +236,7 @@ T=A.*residual;
 
 TN = nansum(nansum(T));
 
-cmap = colormap_cpt('Balance.cpt'); 
-
-figure()
-subplot(121)
-hold on
-pcolor(lat(:,7:30),z(:,7:30),T(:,7:30))
-C = contour(lat(:,7:30),z(:,7:30),T(:,7:30),[-1600000 0 160000],...
-            '--w','LineWidth',2);
-ylabel('Profundidad [m]')
-xlabel('Latitud')
-title('Transporte')
-colormap(cmap)
-shading interp
-a=colorbar;
-ylabel(a,'[m^3/s]','FontSize',17);
-caxis([-4.3e+04 4.3e+04])
-set(gca,'Fontsize',17)
-box on
-subplot(122)
-hold on
-pcolor(lat(:,7:30),z(:,7:30),residual(:,7:30))
-C = contour(lat(:,7:30),z(:,7:30),residual(:,7:30),[-100 0 100],...
-            '--w','LineWidth',2);
-%clabel(C,'FontWeight','bold','Color','w','FontSize',12) 
-xlabel('Latitud')
-title('Corriente Residual')
-colormap(cmap)
-shading interp
-a=colorbar;
-ylabel(a,'[m/s]','FontSize',17);
-caxis([-0.4 0.4])
-set(gca,'Fontsize',17)
-box on
-
-%% Calculo de los transportes
+% Calculo de los Transportes
 
 TN = nansum(nansum(T))  %transporte neto
 idx_pos=find(T>0)
@@ -269,6 +245,76 @@ TN_pos=nansum(nansum(T(idx_pos))) %Transporte neto entrando por la Boca del Guaf
 TN_neg=nansum(nansum(T(idx_neg))) %Transporte neto saliendo por la Boca del Guafo
 
 TT = table(TN,TN_pos,TN_neg)
+
+
+%% Calculo de la seccion U sin obtener la componenete residual.
+
+clear all
+close all
+clc
+start
+
+load('z.mat'); load('lat.mat')
+nc=netcdf('u_Y1_M3_guafo.nc','r');
+h=ncread('mosa_BGQ_h_guafo.nc','h');
+uvel=nc{'u'}(:,:,:,:);
+s_rho=nc{'s_rho'}(:);
+
+uuvel=mean(uvel,1);
+uuvel=squeeze(uuvel(1,:,:));
+idx=find(uuvel==0);
+uuvel(idx)=NaN;
+
+% B=permute(uvel,[3,2,1]);
+% B=mean(B,3);
+% B=B';
+% idx=find(B==0);
+% B(idx)=NaN;
+
+cmap = colormap_cpt('Balance.cpt');
+
+figure()
+hold on
+pcolor(lat(:,7:30),z(:,7:30),uuvel(:,7:30))
+C = contour(lat(:,7:30),z(:,7:30),uuvel(:,7:30),[-100 0 100],...
+            '--w','LineWidth',2);
+%clabel(C,'FontWeight','bold','Color','w','FontSize',12) 
+xlabel('Latitud')
+title('Componente U de la Velocidad MOSA 2.7 km')
+colormap(cmap)
+shading interp
+a=colorbar;
+ylabel(a,'[m/s]','FontSize',17);
+caxis([-0.4 0.4])
+set(gca,'Fontsize',17)
+set(gca,'Xdir','reverse')
+box on
+
+%u_mar_gua=uuvel;
+%save('u_mar_gua.mat','u_mar_gua') %Seccion Boca del guafo del promedio mensual del mes de marzo
+
+%Calculo del Transporte
+
+dx=abs(lat(1,1)-lat(1,2)); %Diferencia entre latitudes
+dx=dx*111.1*1000; %Transformar de grados a metros
+
+dy=s_rho*h'; %Largo de cada celda
+
+A=abs(dy*dx); %Area de la celda
+
+T=A.*uuvel; 
+
+TN = nansum(nansum(T));
+
+% Calculo de los Transportes
+
+TN = nansum(nansum(T))  %transporte neto
+idx_pos=find(T>0) %Valores positivos
+idx_neg=find(T<0) %Valores negativos
+TN_pos=nansum(nansum(T(idx_pos))) %Transporte neto entrando por la Boca del Guafo
+TN_neg=nansum(nansum(T(idx_neg))) %Transporte neto saliendo por la Boca del Guafo
+
+TTT = table(TN,TN_pos,TN_neg)
 
 
 
