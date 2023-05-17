@@ -4,9 +4,9 @@ clc
 
 addpath(genpath('/home/valentina/Descargas/m_map1.4/m_map/'))
 dir= '/media/valentina/TOSHIBA/OPENDRIFT/Simualacion_final/Mareas/'
+ 
 file= [dir 'mosa_VM_1mes_horario_back_AS_27-31Enero.nc']
 ncdisp(file)
-
 lon=ncread([file],'lon');
 lat=ncread([file],'lat');
 z=ncread([file],'z');
@@ -25,8 +25,7 @@ status=ncread([file],'status');
   ind_down=find((lat(841,:)<-43.5) & (lon(841,:)<-74));
   ind_in_up=find((lat(841,:)>-43.5) & (lon(841,:)>-74));
   ind_in_down=find((lat(841,:)<-43.5) & (lon(841,:)>-74));
- 
- 
+  
 %Campo de particulas en el tiempo 2
 
 lat_ini=lat(1,:);
@@ -37,7 +36,10 @@ lat_ini(indx)=NaN;
 lon_ini(indx)=NaN;
 z_ini(indx)=NaN;
 
-%% Graficos de seccion en la Boca del Guafo
+ 
+ 
+ 
+ % Graficos de seccion en la Boca del Guafo
 
 figure(1)
 subplot(151)
@@ -102,13 +104,15 @@ box on
  %l= colorbar 
  %colormap(m_colmap('blues')); 
  set(gca, 'FontSize', 17)
- for i=1:100
- hold on
- %m_plot(lon(:,ind_up(i)),lat(:,ind_up(i)),'marker','o','color','k','markerfacecolor','r','markersize',4); 
- m_scatter(lon(:,ind_up(i)),lat(:,ind_up(i)),30.0,z(:,ind_up(i)),'filled'); 
+ 
+ %for i=1:100
+ %hold on
+ decimar=100;
+ m_plot(lon(:,ind_up(1:decimar:end)),lat(:,ind_up(1:decimar:end)),'marker','o','color','k','markerfacecolor','r','markersize',4); 
+ %m_scatter(lon(:,ind_up(i)),lat(:,ind_up(i)),30.0,z(:,ind_up(i)),'filled'); 
  caxis([-340 0])
- hold off 
- end
+ %hold off 
+ %end
 
 % 
 %  subplot(132)
