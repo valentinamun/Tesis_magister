@@ -47,18 +47,13 @@ status=ncread([file1],'status');
 lat(find(lat>0))=NaN;
 lon(find(lon>0))=NaN;
   
-%  ind_nor01=find((lat(841,:)>-43.5) & (lon(841,:)<-74.0)); %Norte
-%  ind_sur01=find((lat(841,:)<-43.5) & (lon(841,:)<-74.0));%Sur
-%  ind_in_mic01=find((lat(841,:)>-43.5) & (lon(841,:)>-74.0));%MIC
-%  ind_in_fior01=find((lat(841,:)<-43.5) & (lon(841,:)>-74.0));%Fiordos
-  aux_ind_nor01=find((lat(841,:)>-43.5))
-  ind_nor01=find(lon(841,aux_ind_nor01)<-74.0); %Norte
-
-
+  ind_nor01=find((lat(841,:)>-43.5) & (lon(841,:)<-74.0)); %Norte
   ind_sur01=find((lat(841,:)<-43.5) & (lon(841,:)<-74.0));%Sur
   ind_in_mic01=find((lat(841,:)>-43.5) & (lon(841,:)>-74.0));%MIC
   ind_in_fior01=find((lat(841,:)<-43.5) & (lon(841,:)>-74.0));%Fiordos
 
+%%  aux_ind_nor01=find((lat(841,:)>-43.5))
+%%  ind_nor01=find(lon(841,aux_ind_nor01)<-74.0); %Norte
   
   figure()
   plot(lon(end,ind_nor01),lat(end,ind_nor01),'o')
