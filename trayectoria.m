@@ -61,7 +61,7 @@ lon(find(lon>0))=NaN;
 
   
   figure()
-  plot(lon(ind_nor01),lat(ind_nor01),'o')
+  plot(lon(end,ind_nor01),lat(end,ind_nor01),'o')
   
   
   a=lon(ind_nor01);
